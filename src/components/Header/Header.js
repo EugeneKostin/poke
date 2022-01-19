@@ -13,9 +13,20 @@ export const Header = ({ title }) => {
       alignItems: 'center',
     }}>
       <Box>
-        <Typography>Hello</Typography>
+        <Typography component='span' sx={{
+          border: 1,
+          textTransform: 'uppercase',
+          padding: '6px',
+          fontSize: '.75rem',
+          lineHeight: 1,
+        }}>
+          {title}
+        </Typography>
       </Box>
-      <ClickHelper />
+      <Box width='calc(max(15%, 140px))'>
+        <ClickHelper />
+      </Box>
+
     </Box>
   );
 

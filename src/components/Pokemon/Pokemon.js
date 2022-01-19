@@ -16,26 +16,25 @@ export const Pokemon = () => {
 
   const handleChipClick = async (url) => {
     let res = await pokeAPI(url)
-    await console.log(res.data);
     setPokemonDefinition({
-      title: res.data.name,
-      image: res.data.sprites.front_default,
-      numOfMoves: res.data.moves.length,
-      id: res.data.id,
-      height: res.data.height,
-      attack: res.data.stats[1].base_stat,
+      title: res.name,
+      image: res.sprites.front_default,
+      numOfMoves: res.moves.length,
+      id: res.id,
+      height: res.height,
+      attack: res.stats[1].base_stat,
     })
   }
 
   useEffect(() => {
     (async () => {
       let res = await pokeAPI(initURL)
-      setPokemonList(res.data.results);
+      setPokemonList(res.results);
     })();
   }, [])
 
   return (
-    <Container disableGutters maxWidth='lg' sx={{
+    <Container maxWidth='lg' sx={{
       width: '100%',
       height: '100%',
       display: 'flex',
@@ -44,8 +43,9 @@ export const Pokemon = () => {
     }}>
       <Box sx={{
         width: '100%',
-        height: '75vh',
+        height: 'calc(min(75vh, 584px))',
         color: 'text.primary',
+        fontWeight: 'fontWeightRegular',
         border: 1,
       }}>
         <Container disableGutters maxWidth='md' sx={{
@@ -53,11 +53,20 @@ export const Pokemon = () => {
           height: '100%',
           display: 'flex',
           flexDirection: 'row',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
         }}>
           <Header title={title} />
-          <Box sx={{ height: 'calc(100% - 54px - 30px)', width: '100%', mt: '54px', display: 'flex' }}>
-            <Box sx={{ width: '50%', display: 'flex', alignItems: 'center', }}>
+          <Box sx={{
+            height: 'calc(100% - 54px - 30px)',
+            width: '100%',
+            mt: '54px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}>
+            {/* Box на Grid изменить */}
+            <Box sx={{ width: '100%', maxWidth: '484px', display: 'flex', alignItems: 'center', ml: '12px', }}>
               {/* <Grid container rowSpacing='10px' columnSpacing='6px' alignItems='center' width: '50%', height: '100%'> cant center */}
               <Grid container rowSpacing='10px' columnSpacing='6px'>
                 {pokemonList.map((data, index) => {
@@ -70,8 +79,11 @@ export const Pokemon = () => {
               </Grid>
             </Box>
             <Box sx={{
-              width: '50%',
+              width: '100%',
+              maxWidth: '484px',
+              height: '100%',
               bgcolor: '#000',
+              padding: '44px 44px 16px 44px',
             }}>
               <Definition data={pokemonDefinition} />
             </Box>

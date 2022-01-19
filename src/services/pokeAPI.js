@@ -16,8 +16,7 @@ import axios from "axios";
 export const pokeAPI = async (url) => {
   try {
     const response = await axios.get(url);
-    console.log(response);
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error);
   }
