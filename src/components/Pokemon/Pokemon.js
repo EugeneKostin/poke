@@ -5,21 +5,33 @@ import { Container, Box, Typography, Stack, Grid } from '@mui/material';
 import { pokeAPI } from '../../services/pokeAPI'
 import { Header } from '../Header/Header';
 import { ChipItem } from '../ChipItem/ChipItem';
+import { Definition } from '../Definition/Definition';
 
 
 export const Pokemon = () => {
   const initURL = 'https://pokeapi.co/api/v2/pokemon?limit=10';
   const title = 'Покемоны API'
   const [pokemonList, setPokemonList] = useState([])
+  const [pokemonDefinition, setPokemonDefinition] = useState({})
 
+  const handleChipClick = async (url) => {
+    let res = await pokeAPI(url)
+    await console.log(res.data);
+    setPokemonDefinition({
+      title: res.data.name,
+      image: res.data.sprites.front_default,
+      numOfMoves: res.data.moves.length,
+      id: res.data.id,
+      height: res.data.height,
+      attack: res.data.stats[1].base_stat,
+    })
+  }
 
   useEffect(() => {
-    async function getPokeList() {
+    (async () => {
       let res = await pokeAPI(initURL)
-      console.log(typeof (res.data.results));
       setPokemonList(res.data.results);
-    }
-    getPokeList();
+    })();
   }, [])
 
   return (
@@ -49,7 +61,11 @@ export const Pokemon = () => {
               {/* <Grid container rowSpacing='10px' columnSpacing='6px' alignItems='center' width: '50%', height: '100%'> cant center */}
               <Grid container rowSpacing='10px' columnSpacing='6px'>
                 {pokemonList.map((data, index) => {
-                  return <Grid item><ChipItem key={index} data={data.name} sx={{ margin: '20px' }} /></Grid>
+                  return (
+                    <Grid item key={index}>
+                      <ChipItem data={data} handleClick={handleChipClick} sx={{ margin: '20px' }} />
+                    </Grid>
+                  )
                 })}
               </Grid>
             </Box>
@@ -57,6 +73,7 @@ export const Pokemon = () => {
               width: '50%',
               bgcolor: '#000',
             }}>
+              <Definition data={pokemonDefinition} />
             </Box>
           </Box>
         </Container>

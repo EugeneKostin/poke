@@ -1,12 +1,10 @@
 // import './App.css';
 import { Chip } from '@mui/material';
 
-export const ChipItem = ({ data }) => {
-  const handleClick = () => {
-    return
-  };
+export const ChipItem = ({ data, handleClick }) => {
+
   return (
-    <Chip label={data} color='primary' onClick={handleClick}
+    <Chip label={data.name} color='primary' onClick={() => handleClick(data.url)}
       sx={{
         padding: 2.5,
         fontSize: '1.25rem',
