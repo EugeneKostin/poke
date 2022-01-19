@@ -22,11 +22,12 @@ const theme = createTheme({
     fontWeightMedium: 600,
     fontWeightBold: 700,
   },
-  // breakpoints: {
-  //   values: {
-  //     lg: 1280,
-  //   }
-  // }
+  breakpoints: {
+    values: {
+      lg: 1280,
+      md: 980,
+    }
+  }
 });
 
 const App = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, Box, Typography, Stack } from '@mui/material';
+import { Container, Box, Typography, Stack, Grid } from '@mui/material';
 
 import { pokeAPI } from '../../services/pokeAPI'
 import { Header } from '../Header/Header';
@@ -23,7 +23,7 @@ export const Pokemon = () => {
   }, [])
 
   return (
-    <Box sx={{
+    <Container disableGutters maxWidth='lg' sx={{
       width: '100%',
       height: '100%',
       display: 'flex',
@@ -32,18 +32,35 @@ export const Pokemon = () => {
     }}>
       <Box sx={{
         width: '100%',
-        height: '80vh',
-        maxWidth: 1280,
+        height: '75vh',
         color: 'text.primary',
         border: 1,
       }}>
-        <Header title={title} />
-        <Stack direction='row' flexWrap='wrap'>
-          {pokemonList.map((data, index) => {
-            return <ChipItem key={index} data={data.name} sx={{ margin: '20px' }} />
-          })}
-        </Stack>
-      </Box>
-    </Box >
+        <Container disableGutters maxWidth='md' sx={{
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'wrap'
+        }}>
+          <Header title={title} />
+          <Box sx={{ height: 'calc(100% - 54px - 30px)', width: '100%', mt: '54px', display: 'flex' }}>
+            <Box sx={{ width: '50%', display: 'flex', alignItems: 'center', }}>
+              {/* <Grid container rowSpacing='10px' columnSpacing='6px' alignItems='center' width: '50%', height: '100%'> cant center */}
+              <Grid container rowSpacing='10px' columnSpacing='6px'>
+                {pokemonList.map((data, index) => {
+                  return <Grid item><ChipItem key={index} data={data.name} sx={{ margin: '20px' }} /></Grid>
+                })}
+              </Grid>
+            </Box>
+            <Box sx={{
+              width: '50%',
+              bgcolor: '#000',
+            }}>
+            </Box>
+          </Box>
+        </Container>
+      </Box >
+    </Container >
   );
 };

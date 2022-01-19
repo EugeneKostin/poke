@@ -5,7 +5,13 @@ import { ClickHelper } from '../ClickHelper/ClickHelper';
 export const Header = ({ title }) => {
 
   return (
-    <Box>
+    <Box sx={{
+      width: '100%',
+      height: '30px',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    }}>
       <Box>
         <Typography>Hello</Typography>
       </Box>
