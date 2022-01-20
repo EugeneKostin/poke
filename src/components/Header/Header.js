@@ -1,5 +1,4 @@
-// import './App.css';
-import { Container, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React from 'react';
 
 export const Header = React.memo(({ title }) => {
