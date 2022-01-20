@@ -1,4 +1,3 @@
-import './App.css';
 import { Pokemon } from './components/Pokemon/Pokemon';
 import { Box } from '@mui/material';
 import { ThemeProvider, createTheme, } from '@mui/material/styles';
@@ -25,8 +24,11 @@ const theme = createTheme({
   },
   breakpoints: {
     values: {
-      lg: 1280,
+      xs: 0,
+      sm: 560,
       md: 980,
+      lg: 1280,
+      xl: 1920,
     }
   }
 });
