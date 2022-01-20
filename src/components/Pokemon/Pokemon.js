@@ -93,7 +93,7 @@ export const Pokemon = () => {
     }}>
       <Box sx={{
         width: '100%',
-        height: { xs: '90vh', sm: 'calc(min(75vh, 584px))' },
+        height: { xs: '90vh', sm: 'calc(clamp(min(384px, 100vh), 75vh, 584px))' },
         color: 'text.primary',
         fontWeight: 'Regular',
       }}>
@@ -109,7 +109,7 @@ export const Pokemon = () => {
               <Header title={title} />
             </Grid>
             <Grid item container sx={{
-              height: { xs: '100%', sm: 'calc(min(75vh - 54px, 500px))' },
+              height: { xs: '100%', sm: 'calc(clamp(300px, 75vh - 54px, 500px))' },
               mt: { xs: '24px', md: '54px' },
             }}>
               <Grid item xs={12} sm={6} sx={{
@@ -123,7 +123,7 @@ export const Pokemon = () => {
               <Grid item xs={12} sm={6} sx={{
                 height: { xs: '40vh', sm: '100%' },
                 bgcolor: '#000',
-                p: { xs: '14px', sm: '44px 44px 16px 44px' },
+                p: { xs: '14px', md: '44px 44px 16px 44px' },
                 mt: { xs: '24px', sm: 0 },
                 display: 'flex',
                 justifyContent: 'center',
