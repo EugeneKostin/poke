@@ -1,5 +1,6 @@
-# Poke App
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pokemon App
+
+[React](https://reactjs.org/) + [Material-UI](https://mui.com/) + [PokeAPI](https://pokeapi.co/)
 
 Link: https://eugenekostin.github.io/poke/
 
