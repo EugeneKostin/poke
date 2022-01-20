@@ -6,6 +6,10 @@ export const ClickHelper = () => {
   return (
     <Box sx={{
       display: 'flex',
+      width: 'calc(max(15%, 140px))',
+      position: 'absolute',
+      top: 0,
+      right: 0,
     }}>
       <img src={icon} />
       <Typography sx={{
