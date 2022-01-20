@@ -1,37 +1,78 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, Box, Typography, Stack, Grid } from '@mui/material';
+import { Container, Box, Typography, Grid, CircularProgress } from '@mui/material';
 
 import { pokeAPI } from '../../services/pokeAPI'
 import { Header } from '../Header/Header';
-import { ChipItem } from '../ChipItem/ChipItem';
+import { ChipList } from '../ChipList/ChipList';
 import { Definition } from '../Definition/Definition';
-
+import { ClickHelper } from '../ClickHelper/ClickHelper';
 
 export const Pokemon = () => {
-  const initURL = 'https://pokeapi.co/api/v2/pokemon?limit=10';
-  const title = 'Покемоны API'
-  const [pokemonList, setPokemonList] = useState([])
-  const [pokemonDefinition, setPokemonDefinition] = useState({})
 
-  const handleChipClick = async (url) => {
-    let res = await pokeAPI(url)
-    setPokemonDefinition({
-      title: res.name,
-      image: res.sprites.front_default,
-      numOfMoves: res.moves.length,
-      id: res.id,
-      height: res.height,
-      attack: res.stats[1].base_stat,
-    })
+  const initURL = 'https://pokeapi.co/api/v2/pokemon?limit=10';
+  const title = 'Покемоны API';
+  const [pokemonList, setPokemonList] = useState(null);
+  const [pokemonDefinition, setPokemonDefinition] = useState(null);
+  const [isDefinitionLoading, setIsDefinitionLoading] = useState(false);
+  const [fetchError, setFetchError] = useState(null);
+
+  const handleChipClick = async (data) => {
+    if (!pokemonDefinition || data.name !== pokemonDefinition.title) {
+      setIsDefinitionLoading(true)
+      const res = await FetchData(data.url);
+      res && setPokemonDefinition({
+        title: res.name,
+        image: res.sprites.front_default,
+        numOfMoves: res.moves.length,
+        id: res.id,
+        height: res.height,
+        attack: res.stats[1].base_stat,
+      })
+      setIsDefinitionLoading(false)
+    }
+  };
+
+  const FetchData = async (url) => {
+    const res = await pokeAPI(url);
+    if (res.err) {
+      setFetchError(res.err);
+      return
+    } else if (res.data) {
+      fetchError && setFetchError(null);
+      return res.data
+    }
+  };
+
+  const displayPokemonList = () => {
+    if (pokemonList) {
+      return (<ChipList pokemonList={pokemonList} handleChipClick={handleChipClick} />)
+    } else if (fetchError) {
+      return (<Typography>{fetchError}</Typography>)
+    } else {
+      return (<CircularProgress />)
+    }
+  }
+
+  const displayDefinition = () => {
+    if (pokemonDefinition) {
+      return (<Definition data={pokemonDefinition} />)
+    } else if (isDefinitionLoading) {
+      return (<CircularProgress />)
+    } else if (fetchError) {
+      return (<Typography>{fetchError}</Typography>)
+    } else {
+      return (<ClickHelper />)
+    }
   }
 
   useEffect(() => {
     (async () => {
-      let res = await pokeAPI(initURL)
-      setPokemonList(res.results);
-    })();
-  }, [])
+      const res = await FetchData(initURL);
+      res && setPokemonList(res.results);
+    })()
+  }, []);
+
 
   return (
     <Container maxWidth='lg' sx={{
@@ -54,6 +95,7 @@ export const Pokemon = () => {
           display: 'flex',
           flexDirection: 'row',
           flexWrap: 'wrap',
+          position: 'relative',
         }}>
           <Header title={title} />
           <Box sx={{
@@ -66,17 +108,9 @@ export const Pokemon = () => {
             flexWrap: 'wrap',
           }}>
             {/* Box на Grid изменить */}
-            <Box sx={{ width: '100%', maxWidth: '484px', display: 'flex', alignItems: 'center', ml: '12px', }}>
+            <Box sx={{ width: '100%', maxWidth: '484px', display: 'flex', alignItems: 'center', justifyContent: 'center', ml: '12px', }}>
               {/* <Grid container rowSpacing='10px' columnSpacing='6px' alignItems='center' width: '50%', height: '100%'> cant center */}
-              <Grid container rowSpacing='10px' columnSpacing='6px'>
-                {pokemonList.map((data, index) => {
-                  return (
-                    <Grid item key={index}>
-                      <ChipItem data={data} handleClick={handleChipClick} sx={{ margin: '20px' }} />
-                    </Grid>
-                  )
-                })}
-              </Grid>
+              {displayPokemonList()}
             </Box>
             <Box sx={{
               width: '100%',
@@ -84,8 +118,11 @@ export const Pokemon = () => {
               height: '100%',
               bgcolor: '#000',
               padding: '44px 44px 16px 44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
-              <Definition data={pokemonDefinition} />
+              {displayDefinition()}
             </Box>
           </Box>
         </Container>
