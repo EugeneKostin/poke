@@ -1,8 +1,10 @@
 // import './App.css';
-import { Box, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Typography, List, ListItem } from '@mui/material';
+import React from 'react';
 
-export const Definition = ({ data }) => {
+export const Definition = React.memo(({ data }) => {
 
+  const { title, image, numOfMoves, id, height, attack } = data;
   return (
     <Box
       sx={{
@@ -21,15 +23,15 @@ export const Definition = ({ data }) => {
         display: 'flex',
         justifyContent: 'center',
       }}>
-        <img src={data.image} alt={data.title} height='100%' />
+        <img src={image} alt={title} height='100%' />
       </Box>
       <List sx={{ p: 0, lineHeight: 1.5, }}>
-        <ListItem disablePadding>Снялся в {data.numOfMoves} сериях</ListItem>
-        <ListItem disablePadding>id: {data.id}</ListItem>
-        <ListItem disablePadding>height: {data.height}</ListItem>
-        <ListItem disablePadding>atack: {data.attack}</ListItem>
+        <ListItem disablePadding>Снялся в {numOfMoves} сериях</ListItem>
+        <ListItem disablePadding>id: {id}</ListItem>
+        <ListItem disablePadding>height: {height}</ListItem>
+        <ListItem disablePadding>atack: {attack}</ListItem>
       </List>
     </Box >
   );
 
-};
+});
