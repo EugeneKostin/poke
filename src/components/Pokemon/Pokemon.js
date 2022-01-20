@@ -20,7 +20,7 @@ export const Pokemon = () => {
   const handleChipClick = async (data) => {
     if (!pokemonDefinition || data.name !== pokemonDefinition.title) {
       setIsDefinitionLoading(true)
-      const res = await FetchData(data.url);
+      const res = await fetchData(data.url);
       res && setPokemonDefinition({
         title: res.name,
         image: res.sprites.front_default,
@@ -33,7 +33,7 @@ export const Pokemon = () => {
     }
   };
 
-  const FetchData = async (url) => {
+  const fetchData = async (url) => {
     const res = await pokeAPI(url);
     if (res.err) {
       setFetchError(res.err);
@@ -62,69 +62,77 @@ export const Pokemon = () => {
     } else if (fetchError) {
       return (<Typography>{fetchError}</Typography>)
     } else {
-      return (<ClickHelper />)
+      return (
+        <Box sx={{
+          width: 'calc(max(15%, 142px))',
+          position: 'absolute',
+          top: 0,
+          right: 0,
+        }}>
+          <ClickHelper />
+        </Box>
+      )
     }
   }
 
   useEffect(() => {
     (async () => {
-      const res = await FetchData(initURL);
+      const res = await fetchData(initURL);
       res && setPokemonList(res.results);
     })()
   }, []);
 
-
   return (
-    <Container maxWidth='lg' sx={{
+    <Container disableGutters maxWidth='lg' sx={{
       width: '100%',
       height: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      p: { xs: 2, md: 0 }
     }}>
       <Box sx={{
         width: '100%',
-        height: 'calc(min(75vh, 584px))',
+        height: { xs: '90vh', sm: 'calc(min(75vh, 584px))' },
         color: 'text.primary',
-        fontWeight: 'fontWeightRegular',
-        border: 1,
+        fontWeight: 'Regular',
       }}>
         <Container disableGutters maxWidth='md' sx={{
+          position: 'relative',
           width: '100%',
           height: '100%',
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          position: 'relative',
         }}>
-          <Header title={title} />
-          <Box sx={{
-            height: 'calc(100% - 54px - 30px)',
-            width: '100%',
-            mt: '54px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexWrap: 'wrap',
+          <Grid container sx={{
+            height: '100%',
           }}>
-            {/* Box на Grid изменить */}
-            <Box sx={{ width: '100%', maxWidth: '484px', display: 'flex', alignItems: 'center', justifyContent: 'center', ml: '12px', }}>
-              {/* <Grid container rowSpacing='10px' columnSpacing='6px' alignItems='center' width: '50%', height: '100%'> cant center */}
-              {displayPokemonList()}
-            </Box>
-            <Box sx={{
-              width: '100%',
-              maxWidth: '484px',
-              height: '100%',
-              bgcolor: '#000',
-              padding: '44px 44px 16px 44px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+            <Grid item xs={12}>
+              <Header title={title} />
+            </Grid>
+            <Grid item container sx={{
+              height: { xs: '100%', sm: 'calc(min(75vh - 54px, 500px))' },
+              mt: { xs: '24px', md: '54px' },
             }}>
-              {displayDefinition()}
-            </Box>
-          </Box>
+              <Grid item xs={12} sm={6} sx={{
+                alignItems: 'center',
+                height: { xs: 'auto', md: '100%' },
+                display: 'flex',
+                justifyContent: 'center',
+              }}>
+                {displayPokemonList()}
+              </Grid>
+              <Grid item xs={12} sm={6} sx={{
+                height: { xs: '40vh', sm: '100%' },
+                bgcolor: '#000',
+                p: { xs: '14px', sm: '44px 44px 16px 44px' },
+                mt: { xs: '24px', sm: 0 },
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+                {displayDefinition()}
+              </Grid>
+            </Grid>
+          </Grid>
         </Container>
       </Box >
     </Container >
