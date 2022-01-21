@@ -6,11 +6,13 @@ export const ClickHelper = () => {
     <Box sx={{
       display: 'flex',
     }}>
-      <img src={icon} />
+      <img src={icon} width='24.25px' />
       <Typography sx={{
         ml: '10px',
         fontSize: '.75rem',
+        fontWeight: 'Medium',
         lineHeight: 1,
+        width: '113px'
       }}>
         Нажмите на нужного Покемона
       </Typography>
@@ -18,4 +20,3 @@ export const ClickHelper = () => {
   );
 
 };
-
