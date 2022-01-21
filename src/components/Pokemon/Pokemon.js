@@ -64,7 +64,6 @@ export const Pokemon = () => {
     } else {
       return (
         <Box sx={{
-          width: 'calc(max(15%, 142px))',
           position: 'absolute',
           top: 0,
           right: 0,
@@ -112,15 +111,17 @@ export const Pokemon = () => {
               height: { xs: '100%', sm: 'calc(clamp(300px, 75vh - 54px, 500px))' },
               mt: { xs: '24px', md: '54px' },
             }}>
-              <Grid item xs={12} sm={6} sx={{
-                alignItems: 'center',
+              <Grid item sx={{
+                width: { xs: 12, md: 'calc(50% - 6px)' },
                 height: { xs: 'auto', md: '100%' },
                 display: 'flex',
                 justifyContent: 'center',
+                alignItems: 'center',
               }}>
                 {displayPokemonList()}
               </Grid>
-              <Grid item xs={12} sm={6} sx={{
+              <Grid item sx={{
+                width: { xs: 12, md: 'calc(50% - 6px)' },
                 height: { xs: '40vh', sm: '100%' },
                 bgcolor: '#000',
                 p: { xs: '14px', md: '44px 44px 16px 44px' },
